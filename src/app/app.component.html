@@ -1,0 +1,96 @@
+<div class="container form-container ">
+  <div class="card  card-design">
+    <form class="login-form" (ngSubmit)="onSubmit()">
+
+      <div class="text-center mb-3">
+        <span id="title"> Time Sheet Comparison Application</span>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-4 col-sm-4 form-group">
+          <label class="form-label" for="customFile">Capgemini Excel File</label>
+          <input type="file" id="fileID" (change)="cgFileUpload1($event)" class="form-control" name="customFile"
+            required />
+        </div>
+
+        <div class="col-12 col-md-4 col-sm-4 form-group">
+          <label class="form-label" for="customFile">Subaru Excel File</label>
+          <input type="file" id="fileID" (change)="sbFileUpload2($event)" class="form-control" name="customFile"
+            required />
+        </div>
+
+        <div class="col-12 col-md-4 col-sm-4 form-group">
+          <label class="form-label" for="customFile">Leave Excel File</label>
+          <input type="file" id="fileID" (change)="leavefileUpload3($event)" class="form-control" name="customFile"
+            required />
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-12 col-md-6 col-sm-6 form-group">
+          <label for="">Working Days:-</label>
+          <input type="number" class="form-control" placeholder="" name="workingDay" [(ngModel)]="workingDay" required>
+        </div>
+
+        <div class="col-12 col-md-6 col-sm-6 form-group">
+          <label for="">Choose Manager:-</label>
+          <select class="form-select" [(ngModel)]="selectedOption" name="ucm" (ngModelChange)="change($event)" required>
+            <option value="">Select an option</option>
+            <option *ngFor="let ucm of _uniqueMgn" [ngValue]="ucm">{{ucm}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary  rounded-pill ">Submit</button>
+      </div>
+    </form>
+
+    <div style=" text-align: end; margin-bottom: 10px; margin-right: 10px;">
+      <button mat-mini-fab class="btn btn-outline-secondary" matTooltipClass="custom-tooltip"
+      color="success" mat-raised-button matTooltip="NOTE :-
+       1) Before Upload Any Excel Sheet in this Application first confirm that you have removed every sheet of inside title and save those sheet only with column attribute name.
+       2) if you Upload sheets with inside of title then You will get wrong outputs.  " matTooltipPosition="below">
+      <mat-icon>info</mat-icon> 
+    </button>
+    </div>  
+  </div>
+</div>
+
+
+
+
+
+
+<div *ngIf="_exportData.length" class="container">
+  <table class="table  text-center table-light table-striped table-hover table-boderless">
+    <thead class="table-dark">
+      <tr>
+        <th>{{ "Sr.No" }}</th>
+        <th>{{ "Employee Name" }}</th>
+        <th>{{ "Working Hour Days" }}</th>
+        <th>{{ "CG Hours" }}</th>
+        <th>{{ "Leave Hours" }}</th>
+        <th>{{ "Total Hours" }}</th>
+        <th>{{ "Subaru Hours" }}</th>
+        <th>{{ "Data Miss Match" }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of _exportData">
+        <td>{{ data["Sr No"] }}</td>
+        <td>{{ data["Employee name"] }}</td>
+        <td>{{ data["Working Hours"] }}</td>
+        <td>{{ data["CG Hours"] }}</td>
+        <td>{{ data["Leave Hours"] }}</td>
+        <td>{{ data["Total Hours"] }}</td>
+        <td>{{ data["Subaru Hours"] }}</td>
+        <td>{{ data["Data Miss Match reason"] }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-center mb-2">
+    <button type="submit" class="btn btn-success " (click)="exportFileData()">Export Data</button>
+  </div>
+</div>
